@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_exceltool" default="compile.module.exceltool">
+  <dirname property="module.exceltool.basedir" file="${ant.file.module_exceltool}"/>
+  
+  <property name="module.jdk.home.exceltool" value="${jdk.home.1.8}"/>
+  <property name="module.jdk.bin.exceltool" value="${jdk.bin.1.8}"/>
+  <property name="module.jdk.classpath.exceltool" value="jdk.classpath.1.8"/>
+  
+  <property name="compiler.args.exceltool" value="-encoding GBK -source 1.8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="exceltool.output.dir" value="${module.exceltool.basedir}/bin"/>
+  <property name="exceltool.testoutput.dir" value="${module.exceltool.basedir}/bin"/>
+  
+  <path id="exceltool.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="exceltool.module.production.classpath">
+    <pathelement location="${basedir}/libs/dom4j-1.6.1.jar"/>
+    <pathelement location="${basedir}/libs/poi-3.7-20101029.jar"/>
+    <pathelement location="${basedir}/libs/poi-examples-3.7-20101029.jar"/>
+    <pathelement location="${basedir}/libs/poi-ooxml-3.7-20101029.jar"/>
+    <pathelement location="${basedir}/libs/poi-ooxml-schemas-3.7-20101029.jar"/>
+    <pathelement location="${basedir}/libs/xmlbeans-2.3.0.jar"/>
+    <pathelement location="${basedir}/libs/luajava-1.1.jar"/>
+    <pathelement location="${basedir}/libs/poi-scratchpad-3.7-20101029.jar"/>
+    <path refid="${module.jdk.classpath.exceltool}"/>
+  </path>
+  
+  <path id="exceltool.runtime.production.module.classpath">
+    <pathelement location="${exceltool.output.dir}"/>
+    <pathelement location="${basedir}/libs/dom4j-1.6.1.jar"/>
+    <pathelement location="${basedir}/libs/poi-3.7-20101029.jar"/>
+    <pathelement location="${basedir}/libs/poi-examples-3.7-20101029.jar"/>
+    <pathelement location="${basedir}/libs/poi-ooxml-3.7-20101029.jar"/>
+    <pathelement location="${basedir}/libs/poi-ooxml-schemas-3.7-20101029.jar"/>
+    <pathelement location="${basedir}/libs/xmlbeans-2.3.0.jar"/>
+    <pathelement location="${basedir}/libs/luajava-1.1.jar"/>
+    <pathelement location="${basedir}/libs/poi-scratchpad-3.7-20101029.jar"/>
+  </path>
+  
+  <path id="exceltool.module.classpath">
+    <pathelement location="${exceltool.output.dir}"/>
+    <pathelement location="${basedir}/libs/dom4j-1.6.1.jar"/>
+    <pathelement location="${basedir}/libs/poi-3.7-20101029.jar"/>
+    <pathelement location="${basedir}/libs/poi-examples-3.7-20101029.jar"/>
+    <pathelement location="${basedir}/libs/poi-ooxml-3.7-20101029.jar"/>
+    <pathelement location="${basedir}/libs/poi-ooxml-schemas-3.7-20101029.jar"/>
+    <pathelement location="${basedir}/libs/xmlbeans-2.3.0.jar"/>
+    <pathelement location="${basedir}/libs/luajava-1.1.jar"/>
+    <pathelement location="${basedir}/libs/poi-scratchpad-3.7-20101029.jar"/>
+    <path refid="${module.jdk.classpath.exceltool}"/>
+  </path>
+  
+  <path id="exceltool.runtime.module.classpath">
+    <pathelement location="${exceltool.output.dir}"/>
+    <pathelement location="${basedir}/libs/dom4j-1.6.1.jar"/>
+    <pathelement location="${basedir}/libs/poi-3.7-20101029.jar"/>
+    <pathelement location="${basedir}/libs/poi-examples-3.7-20101029.jar"/>
+    <pathelement location="${basedir}/libs/poi-ooxml-3.7-20101029.jar"/>
+    <pathelement location="${basedir}/libs/poi-ooxml-schemas-3.7-20101029.jar"/>
+    <pathelement location="${basedir}/libs/xmlbeans-2.3.0.jar"/>
+    <pathelement location="${basedir}/libs/luajava-1.1.jar"/>
+    <pathelement location="${basedir}/libs/poi-scratchpad-3.7-20101029.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.exceltool">
+    <patternset refid="ignored.files"/>
+    <exclude name="bin/**"/>
+    <exclude name="bin/com/**"/>
+    <exclude name="bin/com/lary/**"/>
+    <exclude name="bin/com/lary/tool/**"/>
+    <exclude name="bin/libs/**"/>
+    <exclude name="bin/.idea/**"/>
+    <exclude name="bin/.idea/dictionaries/**"/>
+    <exclude name="bin/.settings/**"/>
+    <exclude name="bin/dictionaries/**"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.exceltool">
+    <patternset refid="excluded.from.module.exceltool"/>
+  </patternset>
+  
+  <path id="exceltool.module.sourcepath">
+    <dirset dir="${module.exceltool.basedir}/../../Desktop">
+      <include name="ExcelTool/src"/>
+      <include name="ExcelTool"/>
+      <include name="ExcelTool/.idea"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.exceltool" depends="compile.module.exceltool.production,compile.module.exceltool.tests" description="Compile module ExcelTool"/>
+  
+  <target name="compile.module.exceltool.production" depends="register.custom.compilers" description="Compile module ExcelTool; production classes">
+    <mkdir dir="${exceltool.output.dir}"/>
+    <javac2 destdir="${exceltool.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.exceltool}/javac">
+      <compilerarg line="${compiler.args.exceltool}"/>
+      <bootclasspath refid="exceltool.module.bootclasspath"/>
+      <classpath refid="exceltool.module.production.classpath"/>
+      <src refid="exceltool.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.exceltool"/>
+    </javac2>
+    
+    <copy todir="${exceltool.output.dir}">
+      <fileset dir="${module.exceltool.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.exceltool.basedir}">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.exceltool.basedir}/.idea">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.exceltool.tests" depends="register.custom.compilers,compile.module.exceltool.production" description="compile module ExcelTool; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.exceltool" description="cleanup module">
+    <delete dir="${exceltool.output.dir}"/>
+    <delete dir="${exceltool.testoutput.dir}"/>
+  </target>
+</project>
