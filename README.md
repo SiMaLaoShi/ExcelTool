@@ -1,21 +1,21 @@
 
 1.03<br>
-ĞŞ¸ÄÒ»¸öĞ¡bug£¬ĞŞ¸Äreadme
+ä¿®æ”¹ä¸€ä¸ªå°bugï¼Œä¿®æ”¹readme<br>
 1.02<br>
-ĞÂÔöÄ¬ÈÏĞĞ<br>
-µÚÁùĞĞÊÇÊÇÄ¬ÈÏÖµ(ÓÅ»¯ÎÄ¼ş´óĞ¡Ê¹ÓÃLuaÔª±íÓÅ»¯)<br>
+æ–°å¢é»˜è®¤è¡Œ<br>
+ç¬¬å…­è¡Œæ˜¯æ˜¯é»˜è®¤å€¼(ä¼˜åŒ–æ–‡ä»¶å¤§å°ä½¿ç”¨Luaå…ƒè¡¨ä¼˜åŒ–)<br>
 
-1.01 ĞÂÔöÌá½»
-Excel ½á¹¹<br>
-µÚÒ»ĞĞÊÇ×Ö¶ÎÃû<br>
-µÚ¶şĞĞÊÇÃèÊö<br>
-µÚÈıĞĞÊÇ²ÎÊıÀàĞÍ<br>
-µÚËÄĞĞÊÇ²ÎÊı¹æÔò<br>
-µÚÎåĞĞÊÇÊÇ·ñµ¼ÈëÁĞ(0Îª²»µ¼Èë)<br>
+1.01 æ–°å¢æäº¤
+Excel ç»“æ„<br>
+ç¬¬ä¸€è¡Œæ˜¯å­—æ®µå<br>
+ç¬¬äºŒè¡Œæ˜¯æè¿°<br>
+ç¬¬ä¸‰è¡Œæ˜¯å‚æ•°ç±»å‹<br>
+ç¬¬å››è¡Œæ˜¯å‚æ•°è§„åˆ™<br>
+ç¬¬äº”è¡Œæ˜¯æ˜¯å¦å¯¼å…¥åˆ—(0ä¸ºä¸å¯¼å…¥)<br>
 ````
 savePath=F\:\\Doc 
-Server=C\:/Users/Administrator/Desktop/Lua/LuaServer // ·şÎñÆ÷lua±í±£´æÄ¿Â¼
-lastPath=C\:\\Users\\Administrator\\Desktop\\Lua\\Excel // ¿Í»§¶Ë±í±£´æÄ¿Â¼
-Client=C\:/Users/Administrator/Desktop/Lua/LuaClient //×îºóÒ»´Î´ò¿ªµÄÄ¿Â¼(×Ô¶¯Éú³É)
+Server=C\:/Users/Administrator/Desktop/Lua/LuaServer // æœåŠ¡å™¨luaè¡¨ä¿å­˜ç›®å½•
+lastPath=C\:\\Users\\Administrator\\Desktop\\Lua\\Excel // å®¢æˆ·ç«¯è¡¨ä¿å­˜ç›®å½•
+Client=C\:/Users/Administrator/Desktop/Lua/LuaClient //æœ€åä¸€æ¬¡æ‰“å¼€çš„ç›®å½•(è‡ªåŠ¨ç”Ÿæˆ)
 
 ````
