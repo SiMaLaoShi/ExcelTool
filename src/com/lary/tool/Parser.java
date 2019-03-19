@@ -17,10 +17,9 @@ public class Parser {
     private static ArrayList<Integer> svrignoreList = new ArrayList<>();
 
     // 把Excel表里的
-    public static void parseExcel(File excelFile)
-            throws FileNotFoundException, IOException {
+    public static void parseExcel(File excelFile) throws IOException {
         Workbook book = new XSSFWorkbook(new FileInputStream(excelFile));
-
+        // 获取Excel表里的所有表
         int sheetNum = book.getNumberOfSheets();
         for (int i = 0; i < sheetNum; i++) {
             Sheet unitSheet = book.getSheetAt(i);
@@ -40,7 +39,6 @@ public class Parser {
             return;
         }
         System.out.println(name + "开始转换");
-
 
         ArrayList<String> list = null;
         int rowNum = sheet.getLastRowNum();
@@ -201,23 +199,28 @@ public class Parser {
         try {
             out = new PrintWriter(file, "UTF-8");
             out.println(String.format("local %s = {", new Object[]{name}));
-
+            // 获取字段名
             ArrayList<String> list0 = (ArrayList<String>) list.get(0);
-
+            // 获取策划描述
             ArrayList<String> list1 = (ArrayList<String>) list.get(1);
-
+            // 获取字段类型
             ArrayList<String> list2 = (ArrayList<String>) list.get(2);
+            // 获取默认value
+            ArrayList<String> list3 = list.get(3);
 
             boolean isStr = ((String) list2.get(0)).equalsIgnoreCase("string");
-            for (int i = 3; i < list.size(); i++) {
+            for (int i = 4; i < list.size(); i++) {
                 out.println(String.format(isStr ? "\t['%s'] = {" : "\t[%s] = {", new Object[]{((ArrayList) list.get(i)).get(0)}));
                 for (int j = 0; j < list0.size(); j++) {
                     String str = j == list0.size() - 1 ? "" : ",";
                     String type = ((String) list2.get(j)).toLowerCase();
+                    // 增加默认值
+                    String defaultValue = list3.get(j);
                     // 去除默认数据
                     String nullData = list.get(i).get(j);
-                    if (nullData == null || nullData.isEmpty())
+                    if (nullData == null || nullData.isEmpty() || nullData.equals(defaultValue) )
                         continue;
+
                     if ("table".equals(type)) {
                         String tempStr = (String) ((ArrayList) list.get(i)).get(j);
                         out.print(String.format("\t\t['%s'] = %s%s", new Object[]{list0.get(j), tempStr, str}));
@@ -238,6 +241,7 @@ public class Parser {
                     } else {
                         out.print(String.format("\t\t['%s'] = %s%s", new Object[]{list0.get(j), ((ArrayList) list.get(i)).get(j), str}));
                     }
+                    // 默认第一行数据添加策划注释
                     String exp = i == 3 ? String.format("\t--%s", new Object[]{list1.get(j)}) : "";
                     out.println(exp);
                 }
@@ -247,8 +251,8 @@ public class Parser {
 
             //region 写入默认值
             out.println("local __default_values = {");
-            for (int j = 0; j < list0.size(); j++) {
-                System.out.println(list0.get(j));
+            // 使用defaultValue
+            /*for (int j = 0; j < list0.size(); j++) {
                 String str = (j == list0.size() - 1 ? "" : ",");
                 String type = list2.get(j).toLowerCase();
                 if ("table".equals(type) || "string[]".equals(type) || "int[]".equals(type)) {
@@ -259,6 +263,22 @@ public class Parser {
                     out.println(String.format("	['%s'] = %s,", list0.get(j), 1.0));
                 } else if ("int".equals(type)) {
                     out.println(String.format("	['%s'] = %s,", list0.get(j), 0));
+                }
+            }*/
+
+            for (int j = 0; j < list0.size(); j++) {
+                String str = (j == list0.size() - 1 ? "" : ",");
+                String type = list2.get(j).toLowerCase();
+                if ("table".equals(type) || "string[]".equals(type) || "int[]".equals(type)) {
+                    out.println(String.format("	['%s'] = %s,", list0.get(j), "{ " + list3.get(j) + "}"));
+                } else if ("string".equals(type)) {
+                    String value = list3.get(j);
+                    value = value.contains("\"\"") ? value : "\"" + value + "\"";
+                    out.println(String.format("	['%s'] = %s,", list0.get(j), value));
+                } else if ("float".equals(type)) {
+                    out.println(String.format("	['%s'] = %s,", list0.get(j), list3.get(j)));
+                } else if ("int".equals(type)) {
+                    out.println(String.format("	['%s'] = %s,", list0.get(j), list3.get(j)));
                 }
             }
             out.println("}");

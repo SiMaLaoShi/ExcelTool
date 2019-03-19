@@ -31,18 +31,19 @@ public class RunMain {
                 selectedFile = jfc.getSelectedFile();
                 System.out.println(selectedFile.getAbsolutePath());
 
+                // 如果选中的是文件
                 if (selectedFile.isFile()) {
                     PropConf.save(PropConf.Key_LastPath, selectedFile.getParent());
 
                     if (selectedFile.getName().toLowerCase().endsWith(Suffix)) {
                         parserByDif(selectedFile);
                     } else {
-                        System.out.println(selectedFile.getName() + "²»ÊÇ.xlsxÎÄ¼þ");
+                        System.out.println(selectedFile.getName() + "选中的不是Excel表");
                     }
                 } else if (selectedFile.isDirectory()) {
                     PropConf.save(PropConf.Key_LastPath, selectedFile.getAbsolutePath());
 
-                    ArrayList<File> list = new ArrayList<File>();
+                    ArrayList<File> list = new ArrayList<>();
                     getFiles(list, selectedFile);
                     if (list.size() == 0) {
                         System.out.println("表格数据为空");
@@ -65,7 +66,7 @@ public class RunMain {
     public static void parserByDif(File file) throws IOException {
         String name = file.getName().replaceAll(Suffix, "");
         if (name.endsWith("_B")) {
-            //ParserB.parseExcel(file);
+//            ParserB.parseExcel(file);
         } else {
             Parser.parseExcel(file);
         }
